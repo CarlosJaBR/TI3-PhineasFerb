@@ -17,10 +17,8 @@ import generics.Node;
 public class GraphTest {
 	
 	private Graph<Integer> g; 
-	private Node<Integer> node1;
-	private Node<Integer> node2;
-	private Node<Integer> node3;
-	private Node<Integer> node4;
+
+	
 	public void setUpStage1() {
 		g = new Graph<Integer>();
 	
@@ -43,19 +41,15 @@ public class GraphTest {
 		
 		for(int i = 0; i<4;i++) {
 			g.insertANode(i+1);
-			
-			
 		}
+		
 		g.insertAEdge(7, 1, 2);
 		g.insertAEdge(3,1,3);
 		g.insertAEdge(2, 3, 2);
 		g.insertAEdge(2, 2, 4);
 		g.insertAEdge(8, 3, 4);
 		
-		node1 = g.getNodesList().get(0);
-		node2 = g.getNodesList().get(1);
-		node3 = g.getNodesList().get(2);
-		node4 = g.getNodesList().get(3);
+	
 		
 	}
 	
@@ -126,22 +120,27 @@ public class GraphTest {
 	}
 	
 	@Test
-
 	public void testDijkstra() {
 		setUpStage4();
 		
-		Stack<Node<Integer>> aux = new Stack<>();
-		aux.add(node2); 
-		aux.add(node3);
-		aux.add(node1);
 		
-		assertEquals(aux,g.dijkstraAlgorithm(node1,node2));
+		Stack<Node<Integer>> aux = new Stack<>();
+		
+		
+		Node<Integer> node_1 = g.getNodesList().get(0);
+		Node<Integer> node_2 = g.getNodesList().get(1);
+		Node<Integer> node_3 = g.getNodesList().get(2);
+	
+		
+		aux.add(node_2);
+		aux.add(node_3);
+		aux.add(node_1);
+		
+		assertEquals(aux,g.dijkstraAlgorithm(1,2));
 		
 	}
 	
-	
-	
-
+	@Test
 	public void testFloydWarshallAlgorithm() {
 		setUpStage3();
 		

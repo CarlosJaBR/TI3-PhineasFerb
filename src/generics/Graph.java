@@ -75,6 +75,17 @@ public class Graph<T> {
 		}
 		else {
 			
+			Edge<T> edge_1 = new Edge<T>(weight,temp_1,temp_2);
+			Edge<T> edge_2 = new Edge<T>(weight,temp_2,temp_1);
+			
+			temp_1.insertAEdge(edge_1);
+			temp_2.insertAEdge(edge_2);
+			
+			edgesList.add(edge_1);
+			
+			out = true;
+			
+			/*
 			
 			Edge<T> edge = new Edge<T>(weight,temp_1,temp_2);
 			
@@ -84,7 +95,7 @@ public class Graph<T> {
 			edgesList.add(edge);
 			
 			out = true;
-			
+			*/
 		}
 		
 		return out;
@@ -137,106 +148,70 @@ public class Graph<T> {
 		
 		return out;
 	}
+	
+	
 
-	public Stack<Node<T>> dijkstraAlgorithm(Node<T> initialVertex, Node<T> finalVertex){
+	public Stack<Node<T>> dijkstraAlgorithm(T start, T end){
 		
-		/*
-		Stack<Node<T>> out = new Stack<>();
-		Node<T> stop = node2;
-		PriorityQueue<Node<T>> setOfNodes = new PriorityQueue<>(nodesList.size(),createComparator());
+		Node<T> startNode = searchANode(start);
+		Node<T> endNode = searchANode(end);
 		
-		int indexNode1 = nodesList.indexOf(node1);
-		
-		distance[indexNode1] = 0; 
-		
-		//Configure the initial state. 
-		
-		for(int i = 0; i<nodesList.size();i++) {
-			
-			if(i!=indexNode1) {
-				//In pseudocode is infinity
-				distance[i] = Integer.MAX_VALUE;
-			}
-			nodesList.get(i).setPrev(null);
-			setOfNodes.add(nodesList.get(i));
-			
-		}
-		System.out.println(setOfNodes.size());
-		//Search minimum distance
-		while(!setOfNodes.isEmpty()) {
-			Node<T> aux = setOfNodes.poll();
-			
-			for(int i = 0; i<aux.getEdges().size();i++) {
-				System.out.println("wenas");
-				int cost = distance[i] + weightEdge(nodesList.get(i), aux);
-				System.out.println("cost: " + cost);
-				if(cost<distance[i]) {
-					distance[i] = cost;
-					nodesList.get(i).setPrev(aux);
-					
-					//Here we change the priority of node.
-					setOfNodes.remove(nodesList.get(i));
-					setOfNodes.add(nodesList.get(i));
-				}
-			}
-		}
-		
-		//Here the answer of method is generated. 
-		
-		if(stop.getPrev()!=null) {
-			while(stop!=null) {
-				out.push(stop);
-				stop.getPrev();
-			}
-		}
-		
-		
-		return out;
-		*/
-		PriorityQueue<Node<T>> distances = new PriorityQueue<>(edgesList.size(), new Comparator<Node<T>>() {
-            @Override
-            public int compare(Node<T> o1, Node<T> o2) {
-                return o1.getDistance() - o2.getDistance();
+		Stack<Node<T>> minimusRoute = new Stack<Node<T>>();
+	
+
+		PriorityQueue<Node<T>> setOfNodes = new PriorityQueue<>(edgesList.size(), createComparator());
+
+		startNode.setDistance(0);
+		setOfNodes .add(startNode);
+        startNode.setPrev(null);
+        
+       
+        for(int i = 0;i<nodesList.size();i++) {
+        	
+        	if(nodesList.get(i) != startNode) {
+        		nodesList.get(i).setDistance(INF);
+        		nodesList.get(i).setPrev(null);
+        		setOfNodes .add(nodesList.get(i));
+        	}
+        }
+       
+        boolean stop = false;
+        
+        while (stop == false) {
+            Node<T> temp = setOfNodes .poll();
+            
+            ArrayList<Node<T>> list = temp.getneighbours();
+            
+            for(int i = 0;i<list.size();i++) {
+            	
+            	int cost = temp.getDistance() + distanceBetweenTwoNodes(temp,list.get(i));
+            	
+            	if(cost < list.get(i).getDistance()) {
+            		list.get(i).setDistance(cost);
+            		list.get(i).setPrev(temp);
+            		
+            		setOfNodes.remove(list.get(i));
+            		setOfNodes.add(list.get(i));
+            	}
             }
-        });
-
-        initialVertex.setDistance(0);
-        distances.add(initialVertex);
-        initialVertex.setPrev(null);
-        for (Node<T> vertex : nodesList) {
-            if (vertex != initialVertex) {
-                vertex.setDistance(Integer.MAX_VALUE);
-                vertex.setPrev(null);
-                distances.add(vertex);
+            
+            
+            if(setOfNodes.isEmpty() == true) {
+            	stop = true;
             }
         }
 
-        while (!distances.isEmpty()) {
-            Node<T> u = distances.poll();
-            for (Node<T> v : u.adjacency()) {
-                int alt = u.getDistance() + length(u, v);
-                if (alt < v.getDistance()) {
-                    v.setDistance(alt);
-                    v.setPrev(u);
-                    // Sort priority queue
-                    distances.remove(v);
-                    distances.add(v);
-
-                }
-            }
-        }
-
-        Stack<Node<T>> path = new Stack<>();
-        Node<T> target = finalVertex;
-        if (target.getPrev() != null || target == initialVertex) {
-            while (target != null) {
-                path.push(target);
-                target = target.getPrev();
+        
+        Node<T> temp = endNode;
+        if (temp .getPrev() != null || temp  == endNode) {
+            while (temp != null) {
+            	minimusRoute.push(temp);
+            	temp  = temp.getPrev();
             }
 
         }
 
-        return path;
+        return minimusRoute;
 	}
 	
 	
@@ -327,7 +302,8 @@ public class Graph<T> {
         return comparator;
     }
 	
-	private int length(Node<T> u, Node<T> v) {
-        return u.searchEdge(v).getWeight();
+	private int distanceBetweenTwoNodes(Node<T> o1, Node<T> o2) {
+		int out = o1.searchEdge(o2).getWeight();
+        return out;
     }
 }

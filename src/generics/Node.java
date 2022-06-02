@@ -120,21 +120,23 @@ public class Node<T>{
 		return out;
 	}
 	
-	 public ArrayList<Node<T>> adjacency() {
-	        ArrayList<Node<T>> list = new ArrayList<>();
-	        for (Edge<T> edge : edges) {
-	            Node<T> vertex = compareEdge(edge);
-
-	            if (vertex == null) {
-	                list.add(edge.getNode_1());
-	            } else {
-	                list.add(vertex);
-	            }
-
-	        }
-
-	        return list;
-	    }
+	public ArrayList<Node<T>> getneighbours() {
+		 
+		ArrayList<Node<T>> out = new ArrayList<Node<T>>();
+		
+		for(int i = 0;i<edges.size();i++) {
+			Node<T> node = compareEdge(edges.get(i));
+			
+			if(node == null) {
+				out.add(edges.get(i).getNode_1());
+			}
+			else {
+				out.add(node);
+			}
+		}
+	
+	    return out;
+	 }
 	
 
 	 private Node<T> compareEdge(Edge<T> edge) {
@@ -156,7 +158,7 @@ public class Node<T>{
 	            }
 	        }
 	        return null;
-	    }
+	 }
 	
 	
 	
