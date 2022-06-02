@@ -20,8 +20,7 @@ import javafx.scene.text.Text;
 public class DijkstraWindowController  implements Initializable{
 	private Main main;
 	
-
-	private String[] citys = { "Danville", "Buenos Aires", "Berlin", "Bruselas", "Brasilia", "La Habana", "Quito",
+	private String[] citys = { "Danville", "Buenos Aires", "Berlin", "Bruselas", "La Habana", "Quito",
 			"Bogota", "Moscu", "Varsovia", "Lisboa", "Londres", "Bucarest", "Belgrado", "Manila", "Paris", "Bangkok",
 			"Ankara", "Pekin", "Santiago de Chile", "Panama", "Lima", "Asuncion", "Tokio","Helsinki", "Amsterdam", "Doha", "Praia",
 			"Ottawa", "Viena", "Kuala Lumpur", "Ciudad de Mexico", "Roma", "Washington D.C", "Estocolmo", "Berna",
@@ -57,6 +56,10 @@ public class DijkstraWindowController  implements Initializable{
 	@FXML
 	private TextArea answerOutput;
 	
+	@FXML
+	private TextArea costOutput;
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Start
@@ -67,6 +70,7 @@ public class DijkstraWindowController  implements Initializable{
 		
 		
 		answerOutput.setVisible(false);
+		costOutput.setVisible(false);
 
 		mensajeTX.setText("");
 		;
@@ -108,17 +112,32 @@ public class DijkstraWindowController  implements Initializable{
 						cityEndCB.getValue().toUpperCase());
 				
 				
-				String out = "";
-				
-				while(s.isEmpty()==false) {
-					out += s.pop();
-					if(!(s.isEmpty() == true)) {
-						out += " --> ";
+				if(s.size()>1) {
+					String out = "";
+					
+					while(s.isEmpty()==false) {
+						out += s.pop();
+						if(!(s.isEmpty() == true)) {
+							out += " --> ";
+						}
 					}
+					
+					
+					answerOutput.setVisible(true);
+					answerOutput.setText(out);
+					
+					int cost = main.floydWarshall(cityStartCB.getValue().toUpperCase(),
+							cityEndCB.getValue().toUpperCase());
+					
+					costOutput.setVisible(true);
+					costOutput.setText("COST = "+cost);
 				}
+				else {
+					costOutput.setVisible(true);
+					answerOutput.setText("No es posible viajar");
+				}
+			
 				
-				answerOutput.setVisible(true);
-				answerOutput.setText(out);
 				
 			}
 		} catch (NullPointerException e) {

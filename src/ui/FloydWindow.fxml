@@ -9,13 +9,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FloydWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FloydWindowController">
    <left>
       <AnchorPane prefHeight="557.0" prefWidth="801.0" BorderPane.alignment="CENTER">
          <children>
             <ComboBox fx:id="cityStartCB" layoutX="80.0" layoutY="192.0" prefHeight="31.0" prefWidth="200.0" />
             <ComboBox fx:id="cityEndCB" layoutX="525.0" layoutY="192.0" prefHeight="31.0" prefWidth="200.0" />
-            <TextArea fx:id="textAreaFloyd" editable="false" layoutX="81.0" layoutY="328.0" prefHeight="200.0" prefWidth="630.0" style="-fx-background-color: #CFEDB8;">
+            <TextArea fx:id="textAreaFloyd" editable="false" layoutX="137.0" layoutY="319.0" prefHeight="60.0" prefWidth="517.0" style="-fx-background-color: #CFEDB8;">
                <font>
                   <Font size="14.0" />
                </font></TextArea>
@@ -32,6 +32,11 @@
                   <Font name="Bell MT" size="18.0" />
                </font>
             </Text>
+            <TextArea fx:id="answerOutput" editable="false" layoutX="137.0" layoutY="410.0" prefHeight="60.0" prefWidth="517.0" style="-fx-background-color: #CFEDB8;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextArea>
          </children>
       </AnchorPane>
    </left>

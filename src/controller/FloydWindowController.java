@@ -2,8 +2,10 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 import application.Main;
+import generics.Node;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,21 +16,21 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import model.City;
-import model.Controller;
+
 
 public class FloydWindowController implements Initializable {
 	
 	
 
+	@SuppressWarnings("unused")
 	private Main main;
 	
-	private String[] citys = { "Danville", "Buenos Aires", "Berlín", "Bruselas", "Brasília", "La Habana", "Quito",
-			"Bogotá", "Moscú", "Varsovia", "Lisboa", "Londres", "Bucarest", "Belgrado", "Manila", "París", "Bangkok",
-			"Ankara", "Pekín", "Santiago de Chile", "Panamá", "Lima", "Asunción", "Tokio", "Ámsterdam", "Doha", "Praia",
-			"Ottawa", "Viena", "Kuala Lumpur", "Ciudad de México", "Roma", "Washington D.C","Helsinki", "Estocolmo", "Berna",
-			"Ciudad de Guatemala", "Atenas", "Puerto Principe", "Kiev", "Nueva Delhi", "Yakarta", "Nairobi", "San José",
-			"Séul", "Oslo", "Madrid", "Budapest", "Wellington", "Caracas" };
+	private String[] citys = { "Danville", "Buenos Aires", "Berlin", "Bruselas", "Brasilia", "La Habana", "Quito",
+			"Bogota", "Moscu", "Varsovia", "Lisboa", "Londres", "Bucarest", "Belgrado", "Manila", "Paris", "Bangkok",
+			"Ankara", "Pekin", "Santiago de Chile", "Panama", "Lima", "Asuncion", "Tokio","Helsinki", "Amsterdam", "Doha", "Praia",
+			"Ottawa", "Viena", "Kuala Lumpur", "Ciudad de Mexico", "Roma", "Washington D.C", "Estocolmo", "Berna",
+			"Ciudad de Guatemala", "Atenas", "Puerto Principe", "Kiev", "Nueva Delhi", "Yakarta", "Nairobi", "San Jose",
+			"Seul", "Oslo", "Madrid", "Budapest", "Wellington", "Caracas" };
 
 	@FXML
 	private Button searchBTT;
@@ -50,6 +52,8 @@ public class FloydWindowController implements Initializable {
 
 	@FXML
 	private TextArea textAreaFloyd;
+	@FXML
+	private TextArea answerOutput;
 
 
 
@@ -79,10 +83,43 @@ public class FloydWindowController implements Initializable {
 				}
 
 			} else {
-				// Algoritmo Floyd
+				
+				Stack<Node<String>> s = main.dijkstra(cityStartCB.getValue().toUpperCase(),
+						cityEndCB.getValue().toUpperCase());
+				
+				
+				if(s.size()>1) {
+					String out = "";
+					
+					while(s.isEmpty()==false) {
+						out += s.pop();
+						if(!(s.isEmpty() == true)) {
+							out += " --> ";
+						}
+					}
+					
+					
+					answerOutput.setVisible(true);
+					answerOutput.setText(out);
+					
+					int cost = main.floydWarshall(cityStartCB.getValue().toUpperCase(),
+							cityEndCB.getValue().toUpperCase());
+					
+					textAreaFloyd.setVisible(true);
+					textAreaFloyd.setText("COST = "+cost);
+				}
+				else {
+					answerOutput.setVisible(true);
+					answerOutput.setText("No es posible viajar");
+				}
+				
 				
 			
-				textAreaFloyd.setVisible(true);
+				
+				
+				
+				
+				
 			}
 		} catch (NullPointerException e) {
 
@@ -105,6 +142,9 @@ public class FloydWindowController implements Initializable {
 		
 		
 		textAreaFloyd.setVisible(false);
+		
+		answerOutput.setVisible(false);
+		
 
 		mensajeTX.setText("");
 		;
