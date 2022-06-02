@@ -1,11 +1,13 @@
 package application;
 
 import java.io.IOException;
+import java.util.Stack;
 
 import controller.DijkstraWindowController;
 import controller.FloydWindowController;
 import controller.InitialWindowController;
 import controller.MenuController;
+import generics.Node;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,7 +31,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		// controller = new Controller();
+		controller = new Controller();
 		initialView();
 	}
 
@@ -79,6 +81,9 @@ public class Main extends Application {
 	}
 
 	public void Floyd() throws IOException {
+		
+		currentStage.close();
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/Menu.fxml"));
 		BorderPane root;
 
@@ -124,8 +129,11 @@ public class Main extends Application {
 		
 
 	}
-	
+
 	public void Dijkstra() throws IOException {
+	
+		//currentStage.close();
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/Menu.fxml"));
 		BorderPane root;
 
@@ -168,6 +176,10 @@ public class Main extends Application {
 		currentStage.setResizable(false);
 		//
 		stage.show();
+	}
+	
+	public Stack<Node<String>> dijkstra(String name1, String name2){
+		return controller.dijktraAlgorothm(name1, name2);
 	}
 
 }

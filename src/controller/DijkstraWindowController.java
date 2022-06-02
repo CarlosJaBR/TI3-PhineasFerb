@@ -2,8 +2,10 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 import application.Main;
+import generics.Node;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,20 +16,17 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import model.City;
-import model.Controller;
 
 public class DijkstraWindowController  implements Initializable{
 	private Main main;
 	
-	private Controller controller;
 
-	private String[] citys = { "Danville", "Buenos Aires", "Berlín", "Bruselas", "Brasília", "La Habana", "Quito",
-			"Bogotá", "Moscú", "Varsovia", "Lisboa", "Londres", "Bucarest", "Belgrado", "Manila", "París", "Bangkok",
-			"Ankara", "Pekín", "Santiago de Chile", "Panamá", "Lima", "Asunción", "Tokio","Helsinki", "Ámsterdam", "Doha", "Praia",
-			"Ottawa", "Viena", "Kuala Lumpur", "Ciudad de México", "Roma", "Washington D.C", "Estocolmo", "Berna",
-			"Ciudad de Guatemala", "Atenas", "Puerto Principe", "Kiev", "Nueva Delhi", "Yakarta", "Nairobi", "San José",
-			"Séul", "Oslo", "Madrid", "Budapest", "Wellington", "Caracas" };
+	private String[] citys = { "Danville", "Buenos Aires", "Berlin", "Bruselas", "Brasilia", "La Habana", "Quito",
+			"Bogota", "Moscu", "Varsovia", "Lisboa", "Londres", "Bucarest", "Belgrado", "Manila", "Paris", "Bangkok",
+			"Ankara", "Pekin", "Santiago de Chile", "Panama", "Lima", "Asuncion", "Tokio","Helsinki", "Amsterdam", "Doha", "Praia",
+			"Ottawa", "Viena", "Kuala Lumpur", "Ciudad de Mexico", "Roma", "Washington D.C", "Estocolmo", "Berna",
+			"Ciudad de Guatemala", "Atenas", "Puerto Principe", "Kiev", "Nueva Delhi", "Yakarta", "Nairobi", "San Jose",
+			"Seul", "Oslo", "Madrid", "Budapest", "Wellington", "Caracas" };
 
 	public Main getMain() {
 		return main;
@@ -56,7 +55,23 @@ public class DijkstraWindowController  implements Initializable{
 	private ComboBox<String> cityEndCB;
 
 	@FXML
-	private TextArea textAreaDijkstra;
+	private TextArea answerOutput;
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// Start
+		cityStartCB.getItems().addAll(citys);
+	
+		// End
+		cityEndCB.getItems().addAll(citys);
+		
+		
+		answerOutput.setVisible(false);
+
+		mensajeTX.setText("");
+		;
+
+	}
 
 
 
@@ -84,16 +99,27 @@ public class DijkstraWindowController  implements Initializable{
 					alert2.setHeaderText("First you must select a destination city");
 					alert2.showAndWait();
 				}
-
+				
 			} else {
-				// Algoritmo Dijkstra
-				//City cityA= controller.returnCityDInitial();
-						
-				//City cityB = controller.returnCityDEnd();
-				//System.out.println("ciudad 1 "+ cityA+" "+cityB);
-				System.out.println("Funciona");
-				mensajeTX.setText("The shortest way from "+cbStart+" to reach "+cbEnd+ " is");
-				textAreaDijkstra.setVisible(true);
+			
+		
+				
+				Stack<Node<String>> s = main.dijkstra(cityStartCB.getValue().toUpperCase(),
+						cityEndCB.getValue().toUpperCase());
+				
+				
+				String out = "";
+				
+				while(s.isEmpty()==false) {
+					out += s.pop();
+					if(!(s.isEmpty() == true)) {
+						out += " --> ";
+					}
+				}
+				
+				answerOutput.setVisible(true);
+				answerOutput.setText(out);
+				
 			}
 		} catch (NullPointerException e) {
 
@@ -106,24 +132,7 @@ public class DijkstraWindowController  implements Initializable{
 
 	}
 	
-	
 
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// Start
-		cityStartCB.getItems().addAll(citys);
-	
-		// End
-		cityEndCB.getItems().addAll(citys);
-		
-		
-		textAreaDijkstra.setVisible(false);
-
-		mensajeTX.setText("");
-		;
-
-	}
 
 	public ComboBox<String> getCityStartCB() {
 		return cityStartCB;
