@@ -56,7 +56,8 @@ public class Edge<T> {
 	public String toString() {
 		return node_1.toString()+" -- "+weight+" --> "+node_2.toString();
 	}
-
+	
+	
 	
 
 	

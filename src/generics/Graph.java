@@ -1,6 +1,9 @@
 package generics;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Stack;
 
 public class Graph<T> {
 	
@@ -133,7 +136,77 @@ public class Graph<T> {
 		return out;
 	}
 
+	public Stack<Node<T>> dijkstraMethod(Node<T> node1, Node<T> node2){
+		
+		int[] distance = new int[nodesList.size()];
+		Stack<Node<T>> out = new Stack<>();
+		Node<T> stop = node2;
+		PriorityQueue<Node<T>> setOfNodes = new PriorityQueue<>(nodesList.size(), new Comparator<Node<T>>() {
+			@Override
+			
+			//This method calculate the priotiry between elements of queue.
+			public int compare(Node<T> n1, Node<T> n2) {
+				
+				int indexN1 = nodesList.indexOf(n1);
+				int indexN2 = nodesList.indexOf(n2);
+				
+				
+				return distance[indexN1] - distance[indexN2];
+			}
+		});
+		
+		int indexNode1 = nodesList.indexOf(node1);
+		
+		distance[indexNode1] = 0; 
+		
+		//Configure the initial state. 
+		
+		for(int i = 0; i<nodesList.size();i++) {
+			
+			if(i!=indexNode1) {
+				//In pseudocode is infinity
+				distance[i] = Integer.MAX_VALUE;
+			}
+			nodesList.get(i).setPrev(null);
+			setOfNodes.add(nodesList.get(i));
+			
+		}
+		
+		//Search minimum distance
+		while(!setOfNodes.isEmpty()) {
+			Node<T> aux = setOfNodes.poll();
+			
+			for(int i = 0; i<aux.getEdges().size();i++) {
+				int cost = distance[i] + weightEdge(nodesList.get(i), aux);
+				
+				if(cost<distance[i]) {
+					distance[i] = cost;
+					nodesList.get(i).setPrev(aux);
+					
+					//Here we change the priority of node.
+					setOfNodes.remove(nodesList.get(i));
+					setOfNodes.add(nodesList.get(i));
+				}
+			}
+		}
+		
+		//Here the answer of method is generated. 
+		
+		if(stop.getPrev()!=null) {
+			while(stop!=null) {
+				out.push(stop);
+				stop.getPrev();
+			}
+		}
+		
+		
+		return out; 
+	}
 	
-
+	
+	public int weightEdge(Node<T> n1, Node<T> n2) {
+		//This method return the weight of edge. 
+		return n1.searchEdgeInList(n2).getWeight();
+	}
 
 }

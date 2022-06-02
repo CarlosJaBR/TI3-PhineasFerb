@@ -84,6 +84,15 @@ public class Node<T>{
 		return element.toString();
 	}
 	
+	public Edge<T> searchEdgeInList(Node<T> node){
+		//We must comparate the node with node_2, because node_1 is the node the we are.
+		for(Edge<T> e : edges) {
+			if(e.getNode_2()==node) {
+				return e;
+			}
+		}
+		return null; 
+	}
 	
 	
 	
