@@ -1,7 +1,7 @@
 package model;
 
 public class City {
-	
+
 	public City(String name) {
 		super();
 		this.name = name;
@@ -21,6 +21,9 @@ public class City {
 	public String toString() {
 		return "City: " + name ;
 	}
+
+
+	
 	
 	
 

@@ -19,22 +19,16 @@ import model.Controller;
 
 public class FloydWindowController implements Initializable {
 	
-	private Controller controller;
+	
 
 	private Main main;
-
+	
 	private String[] citys = { "Danville", "Buenos Aires", "Berlín", "Bruselas", "Brasília", "La Habana", "Quito",
 			"Bogotá", "Moscú", "Varsovia", "Lisboa", "Londres", "Bucarest", "Belgrado", "Manila", "París", "Bangkok",
 			"Ankara", "Pekín", "Santiago de Chile", "Panamá", "Lima", "Asunción", "Tokio", "Ámsterdam", "Doha", "Praia",
 			"Ottawa", "Viena", "Kuala Lumpur", "Ciudad de México", "Roma", "Washington D.C","Helsinki", "Estocolmo", "Berna",
 			"Ciudad de Guatemala", "Atenas", "Puerto Principe", "Kiev", "Nueva Delhi", "Yakarta", "Nairobi", "San José",
 			"Séul", "Oslo", "Madrid", "Budapest", "Wellington", "Caracas" };
-
-	public Main getMain() {
-		return main;
-	}
-
-	
 
 	@FXML
 	private Button searchBTT;
@@ -86,13 +80,8 @@ public class FloydWindowController implements Initializable {
 
 			} else {
 				// Algoritmo Floyd
-				City cityA= controller.returnCityFInitial();
 				
-				City cityB = controller.returnCityFEnd();
-				
-				
-				System.out.println("Funciona");
-				mensajeTX.setText("The shortest way from "+cbStart+" to reach "+cbEnd+ " is");
+			
 				textAreaFloyd.setVisible(true);
 			}
 		} catch (NullPointerException e) {
