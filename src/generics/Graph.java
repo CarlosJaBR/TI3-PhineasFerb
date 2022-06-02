@@ -7,6 +7,8 @@ import java.util.Stack;
 
 public class Graph<T> {
 	
+	final static int INF = 9999;
+	
 	//Attributes
 	private ArrayList<Node<T>> nodesList;
 	private ArrayList<Edge<T>> edgesList;
@@ -136,7 +138,7 @@ public class Graph<T> {
 		return out;
 	}
 
-	public Stack<Node<T>> dijkstraMethod(Node<T> node1, Node<T> node2){
+	public Stack<Node<T>> dijkstraAlgorithm(Node<T> node1, Node<T> node2){
 		
 		int[] distance = new int[nodesList.size()];
 		Stack<Node<T>> out = new Stack<>();
@@ -201,6 +203,70 @@ public class Graph<T> {
 		
 		
 		return out; 
+	}
+	
+	
+	public  int [][]  floyd_Warshall_Algorithm() {
+		
+		
+		int [][] distanceMatrix = distanceMatrix();
+	
+		
+		for(int k = 0;k<nodesList.size();k++) {
+			for(int i = 0;i<nodesList.size();i++) {
+				for(int j = 0;j<nodesList.size();j++) {
+		
+					if(distanceMatrix[i][k] + distanceMatrix[k][j] < distanceMatrix[i][j]) {
+				
+						distanceMatrix[i][j] = distanceMatrix[i][k] + distanceMatrix[k][j];
+					
+					}
+				
+				}
+			}
+		}
+		
+		return distanceMatrix;
+		
+
+	}
+	
+	private int [][] distanceMatrix() {
+		int distanceMatrix [][] = new int[nodesList.size()][nodesList.size()];
+		
+		for(int i = 0;i<distanceMatrix.length;i++) {
+			for(int j = 0;j<distanceMatrix[0].length;j++) {
+				
+				Node<T> node_1 = nodesList.get(i);
+				Node<T> node_2 = nodesList.get(j);
+				
+				if(node_1 == node_2) {
+					distanceMatrix[i][j] = 0;
+				}
+				else {
+					ArrayList<Edge<T>> edges_1 = node_1.getEdges();
+					
+					//To look for node_2 in the edges of node_1
+					boolean find = false;
+					for(int k = 0;k<edges_1.size();k++) {
+			
+						if(edges_1.get(k).getNode_2() == node_2) {
+								
+							distanceMatrix[i][j] = edges_1.get(k).getWeight();
+							find = true;
+						
+						}
+					}
+					
+					if(find == false) {
+						distanceMatrix[i][j] = INF;
+					}
+				}
+			}
+		}
+		
+		return distanceMatrix;
+		
 	}
 	
 	
