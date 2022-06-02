@@ -1,6 +1,7 @@
 package test;
 
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -30,6 +31,25 @@ public class GraphTest {
 		for(int i = 0;i<1000;i++) {
 			g.insertANode(i+1);
 		}
+	}
+	
+	public void setUpStage3() {
+		g = new Graph<Integer>();
+		
+		g.insertANode(1);
+		g.insertANode(2);
+		g.insertANode(3);
+		g.insertANode(4);
+		g.insertANode(5);
+		
+		g.insertAEdge(15, 1, 2);
+		g.insertAEdge(1, 2, 5);
+		g.insertAEdge(2, 5, 4);
+		g.insertAEdge(14, 4, 2);
+		g.insertAEdge(3, 4, 3);
+		g.insertAEdge(12, 3, 2);
+		g.insertAEdge(11, 3, 1);
+	
 	}
 	
 	@Test
@@ -77,5 +97,20 @@ public class GraphTest {
 		assertTrue(g.insertAEdge(20,5,500));
 		
 		
+	}
+	
+	@Test
+	public void testFloydWarshallAlgorithm() {
+		setUpStage3();
+		
+		int [][] expected = {
+				{0,15,11,14,16},
+				{15,0,6,3,1},
+				{11,6,0,3,5},
+				{14,3,3,0,2},
+				{16,1,5,2,0}
+		};
+		
+		assertArrayEquals(expected,g.floyd_Warshall_Algorithm());
 	}
 }
