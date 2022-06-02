@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DijkstraWindowController">
+   <left>
+      <AnchorPane prefHeight="557.0" prefWidth="801.0" BorderPane.alignment="CENTER">
+         <children>
+            <ComboBox fx:id="cityStartCB" layoutX="80.0" layoutY="192.0" prefHeight="31.0" prefWidth="200.0" />
+            <ComboBox fx:id="cityEndCB" layoutX="525.0" layoutY="192.0" prefHeight="31.0" prefWidth="200.0" />
+            <TextArea fx:id="textAreaDijkstra" editable="false" layoutX="81.0" layoutY="328.0" prefHeight="200.0" prefWidth="630.0" style="-fx-background-color: #CFEDB8;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextArea>
+            <Button fx:id="searchBTT" layoutX="364.0" layoutY="192.0" mnemonicParsing="false" onAction="#searchCM" text="Search" />
+            <ImageView fx:id="imageStart" fitHeight="150.0" fitWidth="200.0" layoutX="80.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageEnd" fitHeight="150.0" fitWidth="200.0" layoutX="525.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <Text fx:id="mensajeTX" fill="WHITE" layoutX="106.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="565.6708984375">
+               <font>
+                  <Font name="Bell MT Bold" size="21.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="315.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm Dijkstra" wrappingWidth="147.6708984375">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </left>
+</BorderPane>
