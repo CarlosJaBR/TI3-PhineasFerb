@@ -207,6 +207,10 @@ public class Graph<T> {
 	public int weightEdge(Node<T> n1, Node<T> n2) {
 		//This method return the weight of edge. 
 		return n1.searchEdgeInList(n2).getWeight();
+		
 	}
 
+	public ArrayList<Node<T>> getNodesList(){
+		return nodesList;
+	}
 }

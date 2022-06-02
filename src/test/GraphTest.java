@@ -4,6 +4,9 @@ package test;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Stack;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +16,10 @@ import generics.Node;
 public class GraphTest {
 	
 	private Graph<Integer> g; 
-
-	
-	
+	private Node<Integer> node1;
+	private Node<Integer> node2;
+	private Node<Integer> node3;
+	private Node<Integer> node4;
 	public void setUpStage1() {
 		g = new Graph<Integer>();
 	
@@ -30,6 +34,28 @@ public class GraphTest {
 		for(int i = 0;i<1000;i++) {
 			g.insertANode(i+1);
 		}
+		
+	}
+	
+	public void setUpStage4() {
+		g = new Graph<Integer>();
+		
+		for(int i = 0; i<4;i++) {
+			g.insertANode(i+1);
+			
+			
+		}
+		g.insertAEdge(7, 1, 2);
+		g.insertAEdge(3,1,3);
+		g.insertAEdge(2, 3, 2);
+		g.insertAEdge(2, 2, 4);
+		g.insertAEdge(8, 3, 4);
+		
+		node1 = g.getNodesList().get(0);
+		node2 = g.getNodesList().get(1);
+		node3 = g.getNodesList().get(2);
+		node4 = g.getNodesList().get(3);
+		
 	}
 	
 	@Test
@@ -78,4 +104,20 @@ public class GraphTest {
 		
 		
 	}
+	
+	@Test
+	public void testDijkstra() {
+		setUpStage4();
+		
+		Stack<Node<Integer>> aux = new Stack<>();
+		aux.add(node1);
+		aux.add(node3);
+		aux.add(node2);
+		
+		assertEquals(aux,g.dijkstraMethod(node1,node3));
+		
+	}
+	
+	
+	
 }
