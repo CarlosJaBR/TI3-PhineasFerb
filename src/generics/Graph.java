@@ -138,24 +138,12 @@ public class Graph<T> {
 		return out;
 	}
 
-	public Stack<Node<T>> dijkstraAlgorithm(Node<T> node1, Node<T> node2){
+	public Stack<Node<T>> dijkstraAlgorithm(Node<T> initialVertex, Node<T> finalVertex){
 		
-		int[] distance = new int[nodesList.size()];
+		/*
 		Stack<Node<T>> out = new Stack<>();
 		Node<T> stop = node2;
-		PriorityQueue<Node<T>> setOfNodes = new PriorityQueue<>(nodesList.size(), new Comparator<Node<T>>() {
-			@Override
-			
-			//This method calculate the priotiry between elements of queue.
-			public int compare(Node<T> n1, Node<T> n2) {
-				
-				int indexN1 = nodesList.indexOf(n1);
-				int indexN2 = nodesList.indexOf(n2);
-				
-				
-				return distance[indexN1] - distance[indexN2];
-			}
-		});
+		PriorityQueue<Node<T>> setOfNodes = new PriorityQueue<>(nodesList.size(),createComparator());
 		
 		int indexNode1 = nodesList.indexOf(node1);
 		
@@ -173,14 +161,15 @@ public class Graph<T> {
 			setOfNodes.add(nodesList.get(i));
 			
 		}
-		
+		System.out.println(setOfNodes.size());
 		//Search minimum distance
 		while(!setOfNodes.isEmpty()) {
 			Node<T> aux = setOfNodes.poll();
 			
 			for(int i = 0; i<aux.getEdges().size();i++) {
+				System.out.println("wenas");
 				int cost = distance[i] + weightEdge(nodesList.get(i), aux);
-				
+				System.out.println("cost: " + cost);
 				if(cost<distance[i]) {
 					distance[i] = cost;
 					nodesList.get(i).setPrev(aux);
@@ -202,7 +191,52 @@ public class Graph<T> {
 		}
 		
 		
-		return out; 
+		return out;
+		*/
+		PriorityQueue<Node<T>> distances = new PriorityQueue<>(edgesList.size(), new Comparator<Node<T>>() {
+            @Override
+            public int compare(Node<T> o1, Node<T> o2) {
+                return o1.getDistance() - o2.getDistance();
+            }
+        });
+
+        initialVertex.setDistance(0);
+        distances.add(initialVertex);
+        initialVertex.setPrev(null);
+        for (Node<T> vertex : nodesList) {
+            if (vertex != initialVertex) {
+                vertex.setDistance(Integer.MAX_VALUE);
+                vertex.setPrev(null);
+                distances.add(vertex);
+            }
+        }
+
+        while (!distances.isEmpty()) {
+            Node<T> u = distances.poll();
+            for (Node<T> v : u.adjacency()) {
+                int alt = u.getDistance() + length(u, v);
+                if (alt < v.getDistance()) {
+                    v.setDistance(alt);
+                    v.setPrev(u);
+                    // Sort priority queue
+                    distances.remove(v);
+                    distances.add(v);
+
+                }
+            }
+        }
+
+        Stack<Node<T>> path = new Stack<>();
+        Node<T> target = finalVertex;
+        if (target.getPrev() != null || target == initialVertex) {
+            while (target != null) {
+                path.push(target);
+                target = target.getPrev();
+            }
+
+        }
+
+        return path;
 	}
 	
 	
@@ -271,7 +305,7 @@ public class Graph<T> {
 	
 	
 	public int weightEdge(Node<T> n1, Node<T> n2) {
-		//This method return the weight of edge. 
+		System.out.println("HOlaaaa");
 		return n1.searchEdgeInList(n2).getWeight();
 		
 	}
@@ -279,4 +313,21 @@ public class Graph<T> {
 	public ArrayList<Node<T>> getNodesList(){
 		return nodesList;
 	}
+	private Comparator<Node<T>> createComparator(){
+        Comparator<Node<T>> comparator = new Comparator<Node<T>>() {
+
+            @Override
+            public int compare(Node<T> o1, Node<T> o2) {
+
+                return o1.getDistance()-o2.getDistance();
+            }
+
+        };
+
+        return comparator;
+    }
+	
+	private int length(Node<T> u, Node<T> v) {
+        return u.searchEdge(v).getWeight();
+    }
 }

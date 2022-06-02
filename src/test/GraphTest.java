@@ -126,22 +126,22 @@ public class GraphTest {
 	}
 	
 	@Test
-<<<<<<< HEAD
+
 	public void testDijkstra() {
 		setUpStage4();
 		
 		Stack<Node<Integer>> aux = new Stack<>();
-		aux.add(node1);
+		aux.add(node2); 
 		aux.add(node3);
-		aux.add(node2);
+		aux.add(node1);
 		
-		assertEquals(aux,g.dijkstraMethod(node1,node3));
+		assertEquals(aux,g.dijkstraAlgorithm(node1,node2));
 		
 	}
 	
 	
 	
-=======
+
 	public void testFloydWarshallAlgorithm() {
 		setUpStage3();
 		
@@ -155,5 +155,5 @@ public class GraphTest {
 		
 		assertArrayEquals(expected,g.floyd_Warshall_Algorithm());
 	}
->>>>>>> bf1d35f4cda702bfd5eab8cfb8a2f7cc14533b96
+
 }

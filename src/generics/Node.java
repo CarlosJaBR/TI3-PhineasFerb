@@ -8,8 +8,17 @@ public class Node<T>{
 	private T element;
 	private Node <T> prev;
 	private ArrayList<Edge<T>> edges;
+	private int distance; 
 	
 	
+	public int getDistance() {
+		return distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+
 	public Node(T element) {
 		
 		this.element = element;
@@ -86,19 +95,68 @@ public class Node<T>{
 	
 	public Edge<T> searchEdgeInList(Node<T> node){
 		//We must comparate the node with node_2, because node_1 is the node the we are.
+		/*
 		for(Edge<T> e : edges) {
 			if(e.getNode_2()==node) {
 				return e;
 			}
 		}
 		return null; 
+		*/
+		Edge<T> out = null;
+		
+		boolean stop = false;
+		
+		for(int i = 0;i<edges.size() && !stop;i++) {
+			if(node.equals(edges.get(i).getNode_1())) {
+				stop = true;
+				out = edges.get(i);
+			}else if(node.equals(edges.get(i).getNode_2())) {
+				stop=true;
+				out=edges.get(i);
+			}
+		}
+		
+		return out;
 	}
 	
-	
+	 public ArrayList<Node<T>> adjacency() {
+	        ArrayList<Node<T>> list = new ArrayList<>();
+	        for (Edge<T> edge : edges) {
+	            Node<T> vertex = compareEdge(edge);
+
+	            if (vertex == null) {
+	                list.add(edge.getNode_1());
+	            } else {
+	                list.add(vertex);
+	            }
+
+	        }
+
+	        return list;
+	    }
 	
 
+	 private Node<T> compareEdge(Edge<T> edge) {
+
+	        if (this != edge.getNode_1()) {
+	            return edge.getNode_1();
+	        } else if (this != edge.getNode_2()) {
+	            return edge.getNode_2();
+	        } else
+	            return null;
+	    }
 	
-	
+	 public Edge<T> searchEdge(Node<T> vertex) {
+	        for (Edge<T> edge : edges) {
+	            if (edge.getNode_1() == vertex) {
+	                return edge;
+	            } else if (edge.getNode_2() == vertex) {
+	                return edge;
+	            }
+	        }
+	        return null;
+	    }
 	
 	
 	
