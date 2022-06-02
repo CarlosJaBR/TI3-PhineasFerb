@@ -78,5 +78,17 @@ public class CityMap {
 		
 		return graph.dijkstraAlgorithm(name1, name2);
 	}
+	
+	public int floydWarshalll(String name1, String name2) {
+		
+		int [][] s = graph.floyd_Warshall_Algorithm();
+		
+		int index_1 = graph.searchANodeReturnIndex(name1);
+		int index_2 = graph.searchANodeReturnIndex(name2);
+		
+		
+		return s[index_1][index_2];
+		
+	}
 
 }

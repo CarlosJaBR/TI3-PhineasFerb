@@ -18,8 +18,12 @@ public class Controller {
 
 	}
 	
-	public Stack<Node<String>> dijktraAlgorothm(String name1, String name2){
+	public Stack<Node<String>> dijktraAlgorithm(String name1, String name2){
 		return cityMap.dijkstraAlgotithm(name1, name2);
+	}
+	
+	public int floydWarshalAlgorithm(String name1, String name2) {
+		return cityMap.floydWarshalll(name1, name2);
 	}
 
 

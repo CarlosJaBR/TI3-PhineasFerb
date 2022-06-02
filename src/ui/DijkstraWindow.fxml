@@ -32,6 +32,11 @@
                   <Font name="Bell MT" size="18.0" />
                </font>
             </Text>
+            <TextArea fx:id="costOutput" editable="false" layoutX="281.0" layoutY="404.0" prefHeight="46.0" prefWidth="218.0" style="-fx-background-color: #CFEDB8;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextArea>
          </children>
       </AnchorPane>
    </left>

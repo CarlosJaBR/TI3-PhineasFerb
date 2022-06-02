@@ -82,7 +82,6 @@ public class Main extends Application {
 
 	public void Floyd() throws IOException {
 		
-		currentStage.close();
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/Menu.fxml"));
 		BorderPane root;
@@ -179,7 +178,11 @@ public class Main extends Application {
 	}
 	
 	public Stack<Node<String>> dijkstra(String name1, String name2){
-		return controller.dijktraAlgorothm(name1, name2);
+		return controller.dijktraAlgorithm(name1, name2);
+	}
+	
+	public int floydWarshall(String name1, String name2) {
+		return controller.floydWarshalAlgorithm(name1, name2);
 	}
 
 }

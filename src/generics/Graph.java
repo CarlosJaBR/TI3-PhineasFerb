@@ -12,7 +12,6 @@ public class Graph<T> {
 	//Attributes
 	private ArrayList<Node<T>> nodesList;
 	private ArrayList<Edge<T>> edgesList;
-
 	
 	public Graph() {
 		//To initialize the arraylist of vertex
@@ -50,6 +49,28 @@ public class Graph<T> {
 		
 		return out;
 	}
+	
+	public int searchANodeReturnIndex(T element) {
+		
+		int out = -1;
+		
+		boolean stop = false;
+	
+	
+		for(int i = 0;i<nodesList.size() && !stop;i++) {
+			
+			if(element.equals(nodesList.get(i).getElement())) {
+				stop = true;
+				out = i;
+			}
+			
+			
+		}
+		
+		return out;
+	}
+	
+	
 	
 	
 	public boolean insertAEdge(int weight,T element_1, T element_2) {
