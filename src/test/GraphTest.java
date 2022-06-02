@@ -17,6 +17,7 @@ import generics.Node;
 public class GraphTest {
 	
 	private Graph<Integer> g; 
+	private Graph<String> gs;
 
 	
 	public void setUpStage1() {
@@ -36,23 +37,6 @@ public class GraphTest {
 		
 	}
 	
-	public void setUpStage4() {
-		g = new Graph<Integer>();
-		
-		for(int i = 0; i<4;i++) {
-			g.insertANode(i+1);
-		}
-		
-		g.insertAEdge(7, 1, 2);
-		g.insertAEdge(3,1,3);
-		g.insertAEdge(2, 3, 2);
-		g.insertAEdge(2, 2, 4);
-		g.insertAEdge(8, 3, 4);
-		
-	
-		
-	}
-	
 	public void setUpStage3() {
 		g = new Graph<Integer>();
 		
@@ -69,7 +53,28 @@ public class GraphTest {
 		g.insertAEdge(3, 4, 3);
 		g.insertAEdge(12, 3, 2);
 		g.insertAEdge(11, 3, 1);
+		
+	}
 	
+	public void setUpStage4() {
+		g = new Graph<Integer>();
+		
+		for(int i = 0; i<4;i++) {
+			g.insertANode(i+1);
+		}
+		
+		g.insertAEdge(7, 1, 2);
+		g.insertAEdge(3,1,3);
+		g.insertAEdge(2, 3, 2);
+		g.insertAEdge(2, 2, 4);
+		g.insertAEdge(8, 3, 4);
+			
+	}
+	
+	public void setUpStage5() {
+		gs = new Graph<String>();
+		
+		
 	}
 	
 	@Test
@@ -154,5 +159,13 @@ public class GraphTest {
 		
 		assertArrayEquals(expected,g.floyd_Warshall_Algorithm());
 	}
+	
+	@Test
+	public void testTravelContries() {
+		setUpStage5();
+		
+		
+	}
+	
 
 }
